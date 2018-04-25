@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>Mybatis jdbc properties</comment>
+
+    <entry key="jdbc.driver">org.postgresql.Driver</entry>
+    <entry key="jdbc.url">jdbc:postgresql://192.168.56.12:5432/ifasample</entry>
+    <entry key="jdbc.username">ifaadmin</entry>
+    <entry key="jdbc.password">ifapass</entry>
+    
+	<!-- validationQuery:유효 검사용 쿼리( 1개 이상의 row를 반환하는 쿼리를 넣어주면 된다. ) -->
+    <entry key="jdbc.validation.query">SELECT 1</entry>
+    <!-- testWhileIdle:컨넥션이 놀고 있을때 validationQuery 를 이용해서 유효성 검사를 할지 여부. -->
+    <entry key="jdbc.test.while.idle">true</entry>
+</properties>

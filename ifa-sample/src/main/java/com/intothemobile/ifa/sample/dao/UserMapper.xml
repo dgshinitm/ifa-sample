@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.intothemobile.ifa.sample.dao.UserMapper">
+	<insert id="insert">
+		insert into ifa_user
+		(
+			id
+			,name
+		) values (
+			#{id, jdbcType=NUMERIC}
+			,#{name, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<resultMap type="com.intothemobile.ifa.sample.entity.User" id="resultUser">
+		<result column="id" property="id" javaType="Integer" />
+		<result column="name" property="name" javaType="String" />
+	</resultMap>
+	
+	<select id="selectList" resultMap="resultUser">
+		select
+			id
+			,name
+		from ifa_user
+		<where>
+			<if test="id != null and id != ''">id = #{id}</if>
+			<if test="name != null and name != ''">name like #{name}</if>
+		</where>
+	</select>
+</mapper>

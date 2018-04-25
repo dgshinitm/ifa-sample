@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+						http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/util
+						http://www.springframework.org/schema/util/spring-util.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+						">
+	<mvc:annotation-driven />
+	
+	<!-- RESTful setting config -->
+	<mvc:default-servlet-handler />
+	
+	<!-- Resources -->
+	<mvc:resources location="/resources/" mapping="/resources/**" />
+
+	<context:component-scan base-package="com.intothemobile.ifa.sample" />
+	
+	<context:annotation-config />
+	
+	<!-- file upload settings -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="uploadTempDir">
+			<bean id="uploadDirResource" class="org.springframework.core.io.FileSystemResource">
+				<constructor-arg>
+					<value>/tmp/com.intothemobile.ifa.sample</value>
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="contentNegotiationManager">
+			<bean class="org.springframework.web.accept.ContentNegotiationManager">
+				<constructor-arg>
+					<bean class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
+						<constructor-arg>
+							<map>
+								<entry key="json" value="application/json; charset=UTF-8" />
+								<entry key="jsonp" value="application/javascript; charset=UTF-8" />
+								<entry key="xml" value="application/xml; charset=UTF-8" />
+								<entry key="web" value="text/html; charset=UTF-8" />
+							</map>
+						</constructor-arg>
+					</bean>
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<!-- JSON View -->
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+				</bean>
+				<!-- JSONP View -->
+				<bean class="com.intothemobile.fwk.spring.view.MappingJackson2JsonpView">
+					<property name="contentType" value="application/javascript" />
+					<property name="jsonCallbackNames" value="callback,jsoncallback"/>
+				</bean>
+<!--
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+					<property name="marshaller">
+						<ref bean="marshaller" />
+					</property>
+				</bean>
+-->
+			</list>
+		</property>
+		<property name="viewResolvers">
+			<list>
+				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+					<property name="order" value="0"/>
+				</bean>
+				
+				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="prefix" value="/WEB-INF/views/" />
+					<property name="suffix" value=".jsp" />
+					<property name="contentType" value="text/html; charset=UTF-8" />
+					<property name="order" value="1" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Locale Resolver -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
+		<property name="cookieName" value="clientlanguage"/>
+		<property name="cookieMaxAge" value="100000"/>
+		<property name="cookiePath" value="/com.intothemobile.ifa.sample"/>
+	</bean>
+	
+	<!--프로퍼티 설정-->
+	<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:properties/common-properties-${serverType}.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<import resource="mvc-controller.xml"/>
+
+</beans>
