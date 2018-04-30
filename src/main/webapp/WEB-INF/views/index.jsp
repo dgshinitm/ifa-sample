@@ -7,11 +7,12 @@
 
 <html>
 <head>
-<script type="text/javascript">
-//location.href="${baseUrl}/main/index";
-</script>
+	<link href="${baseUrl}/resources/css/ifa.css" rel="stylesheet" type="text/css" />
+	<script src="http://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 </head>
 <body>
-Hello itm-framework-assistant user!!
+<h1>Hello itm-framework-assistant user!!</h1>
+
+<a href="${baseUrl}/user/list">User List</a>
 </body>
 </html>

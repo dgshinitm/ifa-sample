@@ -6,25 +6,70 @@
 		(
 			id
 			,name
+			,nickname
 		) values (
 			#{id, jdbcType=NUMERIC}
 			,#{name, jdbcType=VARCHAR}
+			,#{nickname, jdbcType=VARCHAR}
 		)
 	</insert>
+	
+	<update id="update">
+		update ifa_user
+		<set>
+			name = #{name, jdbcType=VARCHAR},
+			nickname = #{nickname, jdbcType=VARCHAR},
+		</set>
+		<where>
+			and id = #{id}
+		</where>
+	</update>
+	
+	<delete id="delete">
+		delete from ifa_user
+		<where>
+			and id = #{id}
+		</where>
+	</delete>
+	
+	<select id="selectTotal" resultType="java.lang.Long">
+		select count(id)
+		from ifa_user
+		<where>
+			<if test="id != null and id != ''">and id = #{id}</if>
+			<if test="name != null and name != ''">and name like #{name}</if>
+			<if test="nickname != null and nickname != ''">and nickname like #{nickname}</if>
+		</where>
+	</select>
 	
 	<resultMap type="com.intothemobile.ifa.sample.entity.User" id="resultUser">
 		<result column="id" property="id" javaType="Integer" />
 		<result column="name" property="name" javaType="String" />
+		<result column="nickname" property="nickname" javaType="String" />
 	</resultMap>
+	
+	<select id="select" resultMap="resultUser">
+		select
+			id
+			,name
+			,nickname
+		from ifa_user
+		<where>
+			and id = #{id}
+		</where>
+	</select>
 	
 	<select id="selectList" resultMap="resultUser">
 		select
 			id
 			,name
+			,nickname
 		from ifa_user
 		<where>
-			<if test="id != null and id != ''">id = #{id}</if>
-			<if test="name != null and name != ''">name like #{name}</if>
+			<if test="id != null and id != ''">and id = #{id}</if>
+			<if test="name != null and name != ''">and name like #{name}</if>
+			<if test="nickname != null and nickname != ''">and nickname like #{nickname}</if>
 		</where>
+		order by id desc
 	</select>
 </mapper>

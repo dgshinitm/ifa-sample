@@ -7,6 +7,7 @@ public class User extends ItmValue {
 
 	private Integer id;
 	private String name;
+	private String nickname;
 	
 	public Integer getId() {
 		return id;
@@ -19,5 +20,11 @@ public class User extends ItmValue {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 }
