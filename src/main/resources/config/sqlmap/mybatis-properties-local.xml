@@ -4,9 +4,9 @@
     <comment>Mybatis jdbc properties</comment>
 
     <entry key="jdbc.driver">org.postgresql.Driver</entry>
-    <entry key="jdbc.url">jdbc:postgresql://192.168.56.12:5432/ifasample</entry>
-    <entry key="jdbc.username">ifaadmin</entry>
-    <entry key="jdbc.password">ifapass</entry>
+    <entry key="jdbc.url">jdbc:postgresql://localhost:5432/itmsample</entry>
+    <entry key="jdbc.username">itmadmin</entry>
+    <entry key="jdbc.password">itmpass</entry>
     
 	<!-- validationQuery:유효 검사용 쿼리( 1개 이상의 row를 반환하는 쿼리를 넣어주면 된다. ) -->
     <entry key="jdbc.validation.query">SELECT 1</entry>
